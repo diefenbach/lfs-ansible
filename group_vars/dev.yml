@@ -34,39 +34,47 @@ sources:
     app:
         - repo: git@github.com:diefenbach/django-lfs.git
           name: lfs
+          path:
           version: master
 
         - repo: git@github.com:diefenbach/lfs-contact.git
           name: lfs_contact
-          version: version/1.1
+          path:
+          version: master
 
         - repo: git@github.com:diefenbach/lfs-order-numbers.git
           name: lfs_order_numbers
-          version: version/1.1
+          path:
+          version: master
 
         - repo: git@github.com:diefenbach/lfs-paypal.git
           name: lfs_paypal
-          version: version/1.3
+          path:
+          version: master
 
         - repo: git@github.com:diefenbach/lfs-theme.git
           name: lfs_theme
+          path:
           version: master
 
         - repo: git@github.com:diefenbach/django-paypal.git
           name: paypal
+          path:
           version: version/0.1.2-lfs-2
 
         - repo: git@github.com:diefenbach/django-portlets.git
           name: portlets
-          version: version/1.3
+          path:
+          version: master
 
         - repo: git@github.com:diefenbach/django-reviews.git
           name: reviews
-          version: version/1.1
+          path:
+          version: master
 
         - repo: git@github.com:diefenbach/django-postal.git
           name: postal
-          path: postal/src
+          path: /src
           version: master
 
 

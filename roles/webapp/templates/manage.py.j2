@@ -5,7 +5,7 @@ import sys
 sys.path.append("{{ app.base_dir }}/project")
 sys.path.append("{{ app.base_dir }}/src")
 {% for item in sources.app %}
-sys.path.append("{{ app.base_dir }}/src/{{ item.name }}")
+sys.path.append("{{ app.base_dir }}/src/{{ item.name }}{{ item.path }}")
 {% endfor %}
 
 if __name__ == "__main__":

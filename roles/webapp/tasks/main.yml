@@ -31,7 +31,7 @@
   shell: "{{ virtualenv.path }}/bin/python {{ app.base_dir }}/manage.py migrate --noinput"
   tags:
     - update-webapp
-    - migrate-databae
+    - migrate-database
 
 - name: Initialize LFS
   shell: "{{ virtualenv.path }}/bin/python {{ app.base_dir }}/manage.py lfs_init"
