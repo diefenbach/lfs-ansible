@@ -1,0 +1,43 @@
+---
+- name: create base directory
+  file: path={{ app.base_dir }} state=directory owner={{ user.name }} group={{ user.group }}
+
+- name: Create manage.py
+  template: src=manage.py.j2 dest={{ app.base_dir }}/manage.py
+  tags:
+    - update-webapp
+    - create-manage
+
+- name: Clone project
+  git: repo={{ sources.project.repo }} dest="{{ app.base_dir }}/{{ sources.project.name }}" version="{{ sources.project.version }}" accept_hostkey=yes
+  tags:
+    - update-webapp
+    - clone-project
+
+- name: Clone app
+  git: repo={{ item.repo }} dest="{{ app.base_dir }}/src/{{ item.name }}" version="{{ item.version }}" accept_hostkey=yes
+  with_items:
+    - "{{ sources.app }}"
+  tags:
+    - update-webapp
+
+- name: Install requirements in virtualenv
+  pip: requirements={{ virtualenv.requirements }} virtualenv={{ virtualenv.path }}
+  tags:
+    - update-webapp
+    - install-requirements
+
+- name: Migrate database
+  shell: "{{ virtualenv.path }}/bin/python {{ app.base_dir }}/manage.py migrate --noinput"
+  tags:
+    - update-webapp
+    - migrate-databae
+
+- name: Initialize LFS
+  shell: "{{ virtualenv.path }}/bin/python {{ app.base_dir }}/manage.py lfs_init"
+
+- name: collectstatic
+  shell: "{{ virtualenv.path }}/bin/python {{ app.base_dir }}/manage.py collectstatic --noinput"
+  tags:
+    - update-webapp
+    - collect-static

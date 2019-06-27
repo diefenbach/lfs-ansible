@@ -1,0 +1,18 @@
+- name: Copy .pgpass
+  template: src=.pgpass.j2 dest={{ user.home }}/.pgpass mode=0600
+  when: app.environment == "production"
+  tags: backup
+
+- name: Creates directory
+  file: path={{ user.home }}/bin state=directory
+  when: app.environment == "production"
+  tags: backup
+
+- name: Copy backup.py
+  template: src=backup.py.j2 dest={{ user.home }}/bin/backup.py mode=0700
+  when: app.environment == "production"
+  tags: backup
+
+- cron: name="Backup {{ app.id }}" minute="0" hour="0" job="{{ virtualenv.path }}/bin/python {{ user.home }}/bin/backup.py -t postgres -n {{ app.id }} -u {{ app.id }} -m {{ app.base_dir }}/project/media/ -l {{ app.base_dir }}/backups/ -r diefenbach@scp.hidrive.strato.com:/users/diefenbach/{{ app.id }}"
+  when: app.environment == "production"
+  tags: backup

@@ -1,0 +1,5 @@
+[webservers]
+ansible_ssh_host=127.0.0.1 ansible_ssh_user=Kai ansible_python_interpreter=/Users/kai/.pyenv/shims/python
+
+[dev:children]
+webservers

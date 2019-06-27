@@ -1,0 +1,80 @@
+---
+user:
+    name: Kai
+    group: staff
+    home: /Users/Kai/Temp
+
+app:
+    id: lfs
+    user_dir: /Users/Kai/Temp
+    base_dir: /Users/Kai/Temp/lfs
+    environment: development
+    webserver_port: 80
+    media_path: /Users/Kai/Temp/lfs/project/media
+    static_path: /Users/Kai/Temp/lfs/project/sitestatic
+    domain: localhost
+
+nginx:
+    template: production
+
+wsgi:
+    socket: 127.0.0.1:8001
+    stats: 127.0.0.1:9191
+
+ssh_keys:
+    public: /Users/Kai/.ssh/ansible/id_rsa.pub
+    private: /Users/Kai/.ssh/ansible/id_rsa
+
+sources:
+    project:
+        repo: git@github.com:diefenbach/lfs-project.git
+        name: project
+        version: master
+
+    app:
+        - repo: git@github.com:diefenbach/django-lfs.git
+          name: lfs
+          version: master
+
+        - repo: git@github.com:diefenbach/lfs-contact.git
+          name: lfs_contact
+          version: version/1.1
+
+        - repo: git@github.com:diefenbach/lfs-order-numbers.git
+          name: lfs_order_numbers
+          version: version/1.1
+
+        - repo: git@github.com:diefenbach/lfs-paypal.git
+          name: lfs_paypal
+          version: version/1.3
+
+        - repo: git@github.com:diefenbach/lfs-theme.git
+          name: lfs_theme
+          version: master
+
+        - repo: git@github.com:diefenbach/django-paypal.git
+          name: paypal
+          version: version/0.1.2-lfs-2
+
+        - repo: git@github.com:diefenbach/django-portlets.git
+          name: portlets
+          version: version/1.3
+
+        - repo: git@github.com:diefenbach/django-reviews.git
+          name: reviews
+          version: version/1.1
+
+        - repo: git@github.com:diefenbach/django-postal.git
+          name: postal
+          path: postal/src
+          version: master
+
+
+virtualenv:
+    requirements: "{{ app.base_dir }}/{{ sources.project.name }}/requirements/{{ app.environment }}.txt"
+    path: "{{ app.base_dir }}/venv"
+
+git:
+    user_name: Kai Diefenbach
+    user_email: kai.diefenbach@iqpp.de
+
